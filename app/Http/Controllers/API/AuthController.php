@@ -28,9 +28,9 @@ class AuthController extends Controller
 
         try {
             $token = $this->authService->login($request->only('email', 'password'));
-            return response()->json(['message' => 'Login successful', 'token' => $token], 200);
+            return response()->json(['status' => true, 'message' => 'Login successful', 'token' => $token], 200);
         } catch (ValidationException $e) {
-            return response()->json(['error' => $e->errors()], 401);
+            return response()->json([ 'status' => false, 'message' => $e->errors()], 401);
         }
     }
 
@@ -48,10 +48,10 @@ class AuthController extends Controller
         $registration = $this->authService->register($request->only('name', 'email', 'password'));
 
         if ($registration === false) {
-            return response()->json(['error' => 'Registration failed, please try again.'], 422);
+            return response()->json(['status' => false, 'message' => 'Registration failed, please try again.'], 422);
         }
     
-        return response()->json(['message' => 'Registration successful, please login to continue'], 201);
+        return response()->json([ "status" => true, 'message' => 'Registration successful, please login to continue'], 201);
     }
 
     /**

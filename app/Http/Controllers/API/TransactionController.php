@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Services\TransactionService;
 use App\Http\Requests\TransactionRequest;
+use Exception;
 
 class TransactionController extends Controller
 {
@@ -17,19 +18,28 @@ class TransactionController extends Controller
 
     public function store(TransactionRequest $request)
     {
-        $transaction = $this->transactionService->processTransaction(
-            $request->user(),
-            $request->amount,
-            $request->transaction_type
-        );
-
-        return response()->json([
-            'status' => $transaction->status,
-            'reference' => $transaction->reference,
-            'message' => $transaction->status === 'completed' 
-                ? 'Transaction processed successfully' 
-                : 'Transaction failed'
-        ]);
+        try {
+            $transaction = $this->transactionService->processTransaction(
+                $request->user(),
+                $request->amount,
+                $request->transaction_type
+            );
+    
+        
+            return response()->json([
+                'status' => $transaction->status,
+                'reference' => $transaction->reference,
+                'message' => $transaction->status === 'completed' 
+                    ? 'Transaction processed successfully' 
+                    : 'Transaction failed, '.$transaction->message
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage()
+            ]);
+        }
+       
     }
 
 

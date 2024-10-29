@@ -41,10 +41,6 @@ class AuthService
         if (!$user) {
             return false;
         }
-
-        // Dispatch the UserCreated event
-        UserCreated::dispatch($user);
-
         return true;
     }
 

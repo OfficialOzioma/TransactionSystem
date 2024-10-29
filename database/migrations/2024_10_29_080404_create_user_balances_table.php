@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_balances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('balance', 10, 2)->default(0);
             $table->timestamp('last_updated_at')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

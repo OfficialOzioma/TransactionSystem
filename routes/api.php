@@ -16,6 +16,8 @@ Route::prefix('v1')->group(function () {
     
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/transaction', [TransactionController::class, 'store']);
-        Route::get('/balance', [UserController::class, 'balance']);
+        Route::get('/balance', [UserController::class, 'getBalance']);
+
+        Route::post('/logout', [AuthController::class, 'logout']);
     }); 
 });

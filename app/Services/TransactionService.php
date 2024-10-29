@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Exception;
 use App\Models\User;
 use App\Models\Transaction;
 use App\Models\UserBalance;
@@ -26,7 +27,7 @@ class TransactionService
                     );
                 
                 if ($type === 'debit' && $userBalance->balance < $amount) {
-                    throw new \Exception('Insufficient funds');
+                    throw new Exception('Insufficient funds');
                 }
                 
                 // Create transaction record
@@ -53,7 +54,7 @@ class TransactionService
                 
                 return $transaction;
             }, 5); // 5 retries for deadlock
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Transaction failed', [
                 'user_id' => $user->id,
                 'amount' => $amount,
@@ -62,18 +63,23 @@ class TransactionService
             ]);
             
             // Mark transaction as failed
-            return Transaction::create([
+            $filedTransaction = Transaction::create([
                 'user_id' => $user->id,
                 'amount' => $amount,
                 'transaction_type' => $type,
                 'status' => 'failed',
                 'reference' => $reference
             ]);
+            
+            $filedTransaction['message'] = $e->getMessage();
+
+            return $filedTransaction;
+
         }
     }
 
     public function getBalance(User $user)
     {
-        return $user->balance()->balance ?? 0;
+        return $user->balance->balance ?? 0;
     }
 }
