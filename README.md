@@ -50,11 +50,6 @@ DB_PASSWORD=
 php artisan migrate
 ```
 
-6. Generate API token:
-```bash
-php artisan sanctum:install
-```
-
 ## API Endpoints
 
 ### Register as user
