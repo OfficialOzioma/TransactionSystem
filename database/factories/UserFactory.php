@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
+use App\Models\UserBalance;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -41,4 +42,16 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+     // Define a state for creating a user with an initial balance
+     public function withBalance($amount = 1000)
+     {
+         return $this->has(
+             UserBalance::factory()->state([
+                 'balance' => $amount,
+                 'last_updated_at' => now()
+             ]),
+             'balance'
+         );
+     }
 }
