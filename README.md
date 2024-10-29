@@ -14,13 +14,13 @@ A secure Laravel-based transaction processing system that handles concurrent ope
 - PHP >= 8.1
 - Composer
 - MySQL/PostgreSQL
-- Laravel 10.x
+- Laravel 11.x
 
 ## Installation
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone git@github.com:OfficialOzioma/TransactionSystem.git
 cd transaction-system
 ```
 
@@ -57,9 +57,31 @@ php artisan sanctum:install
 
 ## API Endpoints
 
+### Register as user
+```
+POST /api/v1/register
+Body:
+{
+    "name":"John Doe",
+    "email": "john@example.com",
+    "password":"password",
+    "password_confirmation": "password"
+}
+```
+
+### Login
+```
+POST /api/v1/login
+Body:
+{
+    "email": "john@example.com",
+    "password":"password"
+}
+```
+
 ### Create Transaction
 ```
-POST /api/transaction
+POST /api/v1/transaction
 Headers:
   - Authorization: Bearer {token}
 Body:
@@ -71,10 +93,18 @@ Body:
 
 ### Get Balance
 ```
-GET /api/balance
+GET /api/v1/balance
 Headers:
   - Authorization: Bearer {token}
 ```
+
+### Logout
+```
+POST /api/v1/logout
+Headers:
+  - Authorization: Bearer {token}
+```
+
 
 ## Testing
 
