@@ -13,7 +13,7 @@ A secure Laravel-based transaction processing system that handles concurrent ope
 
 - PHP >= 8.1
 - Composer
-- MySQL/PostgreSQL
+- MySQL/sqlite
 - Laravel 11.x
 
 ## Installation
