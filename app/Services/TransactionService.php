@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Log;
 
 class TransactionService
 {
+    /**
+     * Process a transaction for a user.
+     *
+     * @param User $user
+     * @param float $amount
+     * @param string $type
+     * @return Transaction
+     * @throws Exception
+     */
     public function processTransaction(User $user, float $amount, string $type)
     {
         $reference = Str::uuid();
@@ -78,6 +87,12 @@ class TransactionService
         }
     }
 
+    /**
+     * Retrieves the current balance of a user.
+     *
+     * @param User $user
+     * @return int
+     */
     public function getBalance(User $user)
     {
         return $user->balance->balance ?? 0;

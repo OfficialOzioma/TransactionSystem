@@ -20,6 +20,7 @@ class UserBalanceFactory extends Factory
         return [
             'user_id' => User::factory(),  // Associate with a new User
             'balance' => $this->faker->randomFloat(2, 0, 10000),  // Random balance amount
+            'last_updated_at' => now()
         ];
     }
 }
