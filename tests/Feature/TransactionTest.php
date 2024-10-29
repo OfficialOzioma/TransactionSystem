@@ -77,11 +77,14 @@ class TransactionTest extends TestCase
         $this->assertEquals(2000, $this->user->balance->fresh()->balance);
     }
 
-    // public function test_unauthenticated_access()
-    // {
-    //     // Make a new request without running setUp()
-    //     $response = $this->withoutToken()->getJson('/api/v1/balance');
+    public function test_unauthenticated_access()
+    {
+        // Create a fresh instance
+        $this->refreshApplication();
+        
+        // Make a new request without running setUp()
+        $response = $this->withoutToken()->getJson('/api/v1/balance');
 
-    //     $response->assertStatus(401);
-    // }
+        $response->assertStatus(401);
+    }
 }
