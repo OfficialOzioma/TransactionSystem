@@ -82,7 +82,7 @@ Headers:
 Body:
 {
     "amount": 100.00,
-    "type": "credit" // or "debit"
+    "transaction_type": "credit" // or "debit"
 }
 ```
 
