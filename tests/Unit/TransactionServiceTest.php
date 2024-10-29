@@ -2,12 +2,10 @@
 
 namespace Tests\Unit;
 
-use Exception;
 use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\UserBalance;
-use Illuminate\Support\Facades\DB;
 use App\Services\TransactionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
